@@ -55,7 +55,7 @@ if uploaded_file is not None:
                 st.success("Audit Complete!")
                 st.markdown(response.text)
                 
-            eexcept Exception as e:
+            except Exception as e:
     if "429" in str(e):
         st.error("Google Rate Limit Hit: The free tier is full. Please wait 2 minutes or upgrade to Pay-As-You-Go in AI Studio.")
     else:
