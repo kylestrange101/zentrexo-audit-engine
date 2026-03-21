@@ -49,7 +49,7 @@ if uploaded_file is not None:
     if st.button("🚀 Run Forensic Analysis"):
         with st.spinner("Zentrexo Agents are scrutinizing line items..."):
             try:
-                model = genai.GenerativeModel('gemini-1.5-flash') # Using the 2026 workhorse
+                model = genai.GenerativeModel('gemini-2.5-flash') # Using the 2026 workhorse
                 
                 # Convert the uploaded file to the format Gemini needs
                 pdf_data = uploaded_file.read()
