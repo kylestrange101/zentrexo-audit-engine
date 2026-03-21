@@ -33,7 +33,7 @@ if uploaded_file is not None:
             try:
                 # 1. Capture the file data
                 file_bytes = uploaded_file.read()
-                file_type = uploaded_file.type # Automatically gets 'application/pdf' or 'image/png'
+                file_type = uploaded_file.type 
 
                 # 2. Wrap the data in a 2026 "Part" object
                 invoice_part = types.Part.from_bytes(
@@ -41,9 +41,9 @@ if uploaded_file is not None:
                     mime_type=file_type
                 )
 
-                # 3. Send to the 2026 Workhorse Model
+                # 3. Send to the Brain
                 response = client.models.generate_content(
-                    model="gemini-2.0-flash-latest", # The stable 2026 engine
+                    model="gemini-1.5-flash-latest", # Using the stable fallback
                     contents=[
                         "You are the Zentrexo Forensic Auditor. Analyze this invoice for revenue leakage. "
                         "Check for: Fuel Surcharges > 12%, duplicate handling fees, and PSS charges outside peak months. "
@@ -56,11 +56,10 @@ if uploaded_file is not None:
                 st.markdown(response.text)
                 
             except Exception as e:
-    if "429" in str(e):
-        st.warning("Zentrexo is in high demand. Retrying in 10 seconds...")
-        time.sleep(10)
-        # It will prompt the user to click again, or you can wrap it in a loop.
-    else:
-        st.error(f"Audit Error: {e}")
+                # --- THIS IS THE BLOCK THAT HAD THE ERROR ---
+                if "429" in str(e):
+                    st.warning("Google is throttling the free tier. Wait 60 seconds and try again.")
+                else:
+                    st.error(f"Audit Error: {e}")
 
 st.caption("Zentrexo Proprietary Engine v2.0 | Confidential")
