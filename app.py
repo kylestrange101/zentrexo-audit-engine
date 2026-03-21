@@ -43,7 +43,7 @@ if uploaded_file is not None:
 
                 # 3. Send to the Brain
                 response = client.models.generate_content(
-                    model="gemini-1.5-flash", # Using the stable fallback
+                    model="gemini-2.0-flash", # Using the stable fallback
                     contents=[
                         "You are the Zentrexo Forensic Auditor. Analyze this invoice for revenue leakage. "
                         "Check for: Fuel Surcharges > 12%, duplicate handling fees, and PSS charges outside peak months. "
