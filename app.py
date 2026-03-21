@@ -56,9 +56,9 @@ if uploaded_file is not None:
                 st.markdown(response.text)
                 
             except Exception as e:
-    if "429" in str(e):
-        st.error("Google Rate Limit Hit: The free tier is full. Please wait 2 minutes or upgrade to Pay-As-You-Go in AI Studio.")
-    else:
-        st.error(f"Technical Error: {e}")
+                if "429" in str(e):
+                    st.error("🚨 Google Rate Limit: The free tier is busy. Wait 60 seconds or upgrade to the Paid Tier in AI Studio.")
+                else:
+                    st.error(f"🔍 Technical Error: {e}")
 
 st.caption("Zentrexo Proprietary Engine v2.0 | Confidential")
