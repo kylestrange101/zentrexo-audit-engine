@@ -1,6 +1,7 @@
 import streamlit as st
 from google import genai
 from google.genai import types # Add this line
+import time # Add this to the top
 
 # --- 1. ZENTREXO BRANDING ---
 st.set_page_config(page_title="Zentrexo | AI Forensic Audit", page_icon="🎯", layout="centered")
@@ -42,7 +43,7 @@ if uploaded_file is not None:
 
                 # 3. Send to the 2026 Workhorse Model
                 response = client.models.generate_content(
-                    model="gemini-2.0-flash", # The stable 2026 engine
+                    model="gemini-2.0-flash-latest", # The stable 2026 engine
                     contents=[
                         "You are the Zentrexo Forensic Auditor. Analyze this invoice for revenue leakage. "
                         "Check for: Fuel Surcharges > 12%, duplicate handling fees, and PSS charges outside peak months. "
@@ -55,6 +56,11 @@ if uploaded_file is not None:
                 st.markdown(response.text)
                 
             except Exception as e:
-                st.error(f"Audit Error: {e}")
+    if "429" in str(e):
+        st.warning("Zentrexo is in high demand. Retrying in 10 seconds...")
+        time.sleep(10)
+        # It will prompt the user to click again, or you can wrap it in a loop.
+    else:
+        st.error(f"Audit Error: {e}")
 
 st.caption("Zentrexo Proprietary Engine v2.0 | Confidential")
