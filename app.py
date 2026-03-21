@@ -9,7 +9,7 @@ st.markdown("""
     .main { background-color: #f5f7f9; }
     .stButton>button { width: 100%; border-radius: 5px; height: 3em; background-color: #002D62; color: white; }
     </style>
-    """, unsafe_allow_code=True)
+    """, unsafe_allow_html=True)
 
 st.title("🎯 Zentrexo Audit Engine")
 st.subheader("Autonomous Revenue Recovery for Logistics")
