@@ -1,5 +1,6 @@
 import streamlit as st
 from google import genai
+from google.genai import types # Add this line
 
 # --- 1. ZENTREXO BRANDING ---
 st.set_page_config(page_title="Zentrexo | AI Forensic Audit", page_icon="🎯", layout="centered")
@@ -29,12 +30,24 @@ if uploaded_file is not None:
     if st.button("🚀 Run Forensic Analysis"):
         with st.spinner("Zentrexo Agents are scrutinizing line items..."):
             try:
-                # 2026 Simple PDF Processing
+                # 1. Capture the file data
+                file_bytes = uploaded_file.read()
+                file_type = uploaded_file.type # Automatically gets 'application/pdf' or 'image/png'
+
+                # 2. Wrap the data in a 2026 "Part" object
+                invoice_part = types.Part.from_bytes(
+                    data=file_bytes,
+                    mime_type=file_type
+                )
+
+                # 3. Send to the 2026 Workhorse Model
                 response = client.models.generate_content(
-                    model="gemini-2.0-flash",
+                    model="gemini-2.0-flash", # The stable 2026 engine
                     contents=[
-                        "Identify revenue leakage: check fuel surcharge caps (>12%), duplicate handling fees, and math errors.",
-                        uploaded_file.read()
+                        "You are the Zentrexo Forensic Auditor. Analyze this invoice for revenue leakage. "
+                        "Check for: Fuel Surcharges > 12%, duplicate handling fees, and PSS charges outside peak months. "
+                        "Format the output as a professional Recovery Report.",
+                        invoice_part
                     ]
                 )
                 
