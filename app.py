@@ -55,11 +55,10 @@ if uploaded_file is not None:
                 st.success("Audit Complete!")
                 st.markdown(response.text)
                 
-            except Exception as e:
-                # --- THIS IS THE BLOCK THAT HAD THE ERROR ---
-                if "429" in str(e):
-                    st.warning("Google is throttling the free tier. Wait 60 seconds and try again.")
-                else:
-                    st.error(f"Audit Error: {e}")
+            eexcept Exception as e:
+    if "429" in str(e):
+        st.error("Google Rate Limit Hit: The free tier is full. Please wait 2 minutes or upgrade to Pay-As-You-Go in AI Studio.")
+    else:
+        st.error(f"Technical Error: {e}")
 
 st.caption("Zentrexo Proprietary Engine v2.0 | Confidential")
