@@ -89,3 +89,18 @@ if uploaded_file is not None:
             
             if "Error" not in result and "Unsupported" not in result:
                 st.success("✅ Analysis Complete. Ready for Human-in-the-Loop review.")
+
+                st.divider()
+st.subheader("🔍 API Diagnostic Mode")
+if st.button("List Authorized Models"):
+    with st.spinner("Pinging Google Servers..."):
+        try:
+            authorized_models = []
+            for m in genai.list_models():
+                if 'generateContent' in m.supported_generation_methods:
+                    authorized_models.append(m.name)
+            
+            st.write("✅ **Your API Key is authorized for these exact strings:**")
+            st.json(authorized_models)
+        except Exception as e:
+            st.error(f"Diagnostic Failed: {e}")
