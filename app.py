@@ -10,7 +10,7 @@ st.set_page_config(page_title="Zentrexo Audit Engine", page_icon="🛡️", layo
 try:
     genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
     # Upgraded to the 3.1 Flash model for high-speed, cost-effective processing
-    model = genai.GenerativeModel('gemini-1.5-flash-latest') 
+    model = genai.GenerativeModel('gemini-pro') 
 except Exception as e:
     st.error("🚨 API Key missing or invalid. Please check your Streamlit Secrets.")
 
